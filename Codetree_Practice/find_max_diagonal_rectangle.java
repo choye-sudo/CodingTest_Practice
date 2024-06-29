@@ -22,18 +22,16 @@ public class find_max_diagonal_rectangle {
 
     public static int getMaxRectangle(int n, int row, int col, int[][]num){
         /* 좌표값(row, col)을 받아 해당 위치에서 가능한 직사각형을 모두 그려 최댓값을 찾음*/ 
-        //직사각형에서 홀수번째(1번째, 3번째)에 그려지는 변 길이 odd, 짝수번째(2번째, 4번째)에 그려지는 변 길이 even
-        int odd = 0;
-        int even = 0;
 
         //해당 지점에서 그린 직사각형 중 최대 합
         int maxRectagleSum = 0;
 
+        //직사각형에서 홀수번째(1번째, 3번째)에 그려지는 변 길이 odd, 짝수번째(2번째, 4번째)에 그려지는 변 길이 even
         //배열의 크기 n과 odd, even은 odd+even = n-1의 관계를 가짐
         for(int odd=1; odd<=n-2; odd++){
             for(int even=1; even+odd<=n-1; even++){
                 //변의 길이를 넣어 직사각형을 그리고 최대 합을 구함 
-                int rectangleSum = drawRectangle(row, col, num, odd, even);
+                int rectangleSum = drawRectangle(n, row, col, num, odd, even);
                 maxRectagleSum = Math.max(maxRectagleSum, rectangleSum);
             }
         }
@@ -41,7 +39,7 @@ public class find_max_diagonal_rectangle {
         return maxRectagleSum;
     }
 
-    public static int drawRectangle(int row, int col, int[][]num, int odd, int even){
+    public static int drawRectangle(int n, int row, int col, int[][]num, int odd, int even){
         /* 시작점 및 각 변의 길이를 받아 직사각형을 그려 합을 구함 */
         //x축, y축 이동 방향 순서대로 설정
         int[] x = {1, -1, -1, 1};
@@ -54,16 +52,28 @@ public class find_max_diagonal_rectangle {
         for(int i=0; i<4; i++){
             if(i==0 || i==2){
                 for(int j=0; j<odd; j++){
-                    rectangleSum+=num[row][col];
-                    row += x[i];
-                    col += y[i];
+                    if(row>=0&&row<=n-1&&col>=0&&col<=n-1){
+                        rectangleSum+=num[row][col];
+                        row += x[i];
+                        col += y[i];
+                    }
+                    else{
+                        rectangleSum=0;
+                        break;
+                    }
                 }
             }
-            else{
+            else if(i==1 || i==3){
                 for(int j=0; j<even; j++){
-                    rectangleSum+=num[row][col];
-                    row += x[i];
-                    col += y[i];
+                    if(row>=0&&row<=n-1&&col>=0&&col<=n-1){
+                        rectangleSum+=num[row][col];
+                        row += x[i];
+                        col += y[i];
+                    }
+                    else{
+                        rectangleSum=0;
+                        break;
+                    }
                 }
             }
         }
