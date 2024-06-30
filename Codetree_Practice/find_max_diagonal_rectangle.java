@@ -63,7 +63,7 @@ public class find_max_diagonal_rectangle {
                     }
                 }
             }
-            else if(i==1 || i==3){
+            else if(i==1 || i==3){q
                 for(int j=0; j<even; j++){
                     if(row>=0&&row<=n-1&&col>=0&&col<=n-1){
                         rectangleSum+=num[row][col];
