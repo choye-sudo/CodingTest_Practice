@@ -1,2 +1,2 @@
 # Programmers_Practice
-Programmers에서 푼 코딩문제를 푸씨푸씨
+코딩테스트 연습문제를 풀고 푸씨푸씨
