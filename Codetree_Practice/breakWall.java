@@ -16,7 +16,7 @@ public class breakWall {
     static int k;
 
     static int[][] grid;
-    static boolean visited;
+    static boolean[][] visited;
     static int[][] step;
     static Queue<Point> queue = new LinkedList<>();
     static ArrayList<Point> list = new ArrayList<>();
@@ -40,40 +40,45 @@ public class breakWall {
     }
 
     public static void chooseWall(int wallNum, int cnt){
-        if(wallNum == list.size()+1){
+        if(wallNum == list.size()){
             if(cnt == k){
                 visited[startPoint.r][startPoint.c] = true;
                 queue.add(startPoint);
                 bfs();
                 init();
             }
-            return 0;
+            return ;
         }
-        Point currPoint = list[wallNum];
+        Point currPoint = list.get(wallNum);
 
         grid[currPoint.r][currPoint.c] = 0;
-        chooseWall(wallnum+1, cnt+1);
+        chooseWall(wallNum+1, cnt+1);
         grid[currPoint.r][currPoint.c] = 1;
 
-        chooseWall(wallnum+1, cnt);
+        chooseWall(wallNum+1, cnt);
     }
 
     public static void bfs(){
         while(!queue.isEmpty()){
             Point currPoint = queue.poll();
             int currNum = step[currPoint.r][currPoint.c];
-            if(currPoint.r == )
 
-                for(int i = 0; i<4; i++){
-                    int newR = currPoint.r+dirR[i];
-                    int newC = currPoint.c+dirC[i];
-
-                    if(canGo(newR, newC)){
-                        visited[newR][newC] = true;
-                        step[newR][newC] = currNum+1;
-                        queue.add(new Point(newR, newC));
-                    }
+            if(currPoint.r == endPoint.r && currPoint.c == endPoint.c){
+                if(answer<0 || answer>currNum){
+                    answer = currNum;
                 }
+            }
+
+            for(int i = 0; i<4; i++){
+                int newR = currPoint.r+dirR[i];
+                int newC = currPoint.c+dirC[i];
+
+                if(canGo(newR, newC)){
+                    visited[newR][newC] = true;
+                    step[newR][newC] = currNum+1;
+                    queue.add(new Point(newR, newC));
+                }
+            }
         }
     }
 
@@ -94,7 +99,7 @@ public class breakWall {
     }
 
     public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         n = Integer.parseInt(st.nextToken());
@@ -112,14 +117,17 @@ public class breakWall {
         }
 
         st = new StringTokenizer(br.readLine());
-        int r1 = Integer.parseInt(st.nextToken());
-        int c1 = Integer.parseInt(st.nextToken());
+        int r1 = Integer.parseInt(st.nextToken())-1;
+        int c1 = Integer.parseInt(st.nextToken())-1;
         startPoint = new Point(r1, c1);
 
-        int r2 = Integer.parseInt(st.nextToken());
-        int c2 = Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(br.readLine());
+        int r2 = Integer.parseInt(st.nextToken())-1;
+        int c2 = Integer.parseInt(st.nextToken())-1;
         endPoint = new Point(r2, c2);
+
+        findWall();
+        chooseWall(0, 0);
+        System.out.print(answer);
     }
 }
-
-
