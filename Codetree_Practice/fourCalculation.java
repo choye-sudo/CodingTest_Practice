@@ -41,7 +41,7 @@ public class fourCalculation {
                     if(nextNum==1){
                         if(answer<0 || answer>nextCount) answer = nextCount;
                     }
-                    else if(nextNum>1 && nextNum<=n+2) queue.add(new Number(nextNum, nextCount));
+                    else if(nextNum>1 && nextNum<=2*n-1) queue.add(new Number(nextNum, nextCount));
                 }
             }
         }
